@@ -1,0 +1,40 @@
+body {
+    margin: 20px;
+}
+
+.treeview {
+    textarea {
+        display: block;
+        height: 300px;
+        width: 200px;
+    }
+    
+    div div div {
+        display:none;
+        margin-left: 10px;
+    }
+    
+    div.nested {
+        & > label {
+            cursor: pointer;
+        }
+        
+        &.open > div {
+            display: inherit;
+        }
+        
+        input.new {
+            display: none;   
+        }
+    }
+    
+    div.nested:before {
+        content: "+";
+        display: inline-block;
+        position:absolute;
+        margin-left: -10px;
+    }
+    div.nested.open:before {
+        content: "-";
+    }
+}
