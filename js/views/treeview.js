@@ -82,16 +82,16 @@ define([
           nextMatch = list[key + 1] && list[key + 1].match(/[ ]{4}/ig);
         child = child.trim();
         if (match && prevMatch && match.length < prevMatch.length) {
-          input += repeat('</div>', match.length + 1) + '<div ' + ((nextMatch) ? 'class="nested'+ (child[0] === '-' ? ' open': '') +'"': '') +'><label>' + child.replace(/^-/m, '') + '</label>';
+          input += repeat('</div>', prevMatch.length - match.length + 1) + '<div' + ((nextMatch > match) ? ' class="nested'+ (child[0] === '-' ? ' open"': '"') : '') +'><label>' + child.replace(/^-/m, '') + '</label>';
           if (!nextMatch) {
-            input += repeat('</div>', match.length + 1);
+            input += repeat('</div>', prevMatch.length - match.length + 1);
           }
         } else if (match && nextMatch && nextMatch.length > match.length) {
           input += '<div class="nested'+ (child[0] === '-' ? ' open': '') +'"><label>' + child.replace(/^-/m, '') + '</label>';
         } else if (match && !nextMatch) {
           input += treeviewTemplate({ label: child }) + repeat('</div>', match.length);
         } else if (nextMatch && nextMatch.length) {
-          input += '<div ' + ((nextMatch && match && match.length == nextMatch.length) ? '': 'class="nested'+ (child[0] === '-' ? ' open': '') +'"') +'><label>' + child.replace(/^-/m, '') + '</label>';
+          input += '<div' + ((nextMatch && ((match || {}).length || 0) < nextMatch.length) ? ' class="nested' + (child[0] === '-' ? ' open"': '"')  : '') + '><label>' + child.replace(/^-/m, '') + '</label>';
           if (match && nextMatch && match.length === nextMatch.length) {
             input += '</div>';
           }
