@@ -52,7 +52,7 @@ define([
 
     editTree: function(e) {
       window.localStorage[this.id] = "";
-      this.edit(this.$el.find('> div'));
+      this.edit();
       this.$el.find('textarea').show().val(window.localStorage[this.id]).next().hide();
     },
     
@@ -63,6 +63,7 @@ define([
     },
 
     edit: function(node, tabulation) {
+      node = node || this.$el.find('> div');
       tabulation = tabulation || "";
       _.each(node.children(), function(child) {
         if ($(child).get(0).tagName.toLowerCase() !== 'label') {
