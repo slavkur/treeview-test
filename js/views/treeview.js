@@ -6,19 +6,19 @@ define([
   "hbs!views/templates/treeview"
 ], function($, _, Backbone, treeviewTemplate) {
   var repeat = function(str, num) {
-      var result = "";
-      for (var i = 0; i < num; i++) {
-        result += str;
-      }
-      return result;
+    var result = "";
+    for (var i = 0; i < num; i++) {
+      result += str;
+    }
+    return result;
   };
     
   return Backbone.View.extend({
     tab: '    ',
     
     events: {
-       'click .edit': 'editTree',
-       'click .apply': 'saveTree'
+      'click .edit': 'editTree',
+      'click .apply': 'saveTree'
     },
       
     initialize: function(options) {
@@ -34,6 +34,11 @@ define([
       }
     },
 
+    /**
+     * creates initial structure from json object
+     * @param  {jQuery} parent
+     * @param  {Array} children
+     */
     appendChildren: function(parent, children) {
       _.each(children, function(child) {
         var el = parent.append(treeviewTemplate({
@@ -62,6 +67,11 @@ define([
       this.$el.find('textarea').hide().next().show();
     },
 
+    /**
+     * converts dom elements into string readable structure, saves to localStorage 
+     * @param  {jQuery} node
+     * @param  {String} tabulation
+     */
     edit: function(node, tabulation) {
       node = node || this.$el.find('> div');
       tabulation = tabulation || "";
@@ -75,6 +85,9 @@ define([
       }, this);
     },
 
+    /**
+     * uses to localStorage to translate string syntax into dom elements, updates treeview
+     */
     parse: function() {
       var input = "";
       _.each(window.localStorage[this.id].trim().split("\n"), function(child, key, list) {

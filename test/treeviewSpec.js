@@ -3,7 +3,8 @@ define(['jquery', 'underscore', 'treeview'], function($, _, TreeView) {
   describe('just checking', function() {
 
     var treeview = new TreeView({
-      el: $('<div id="treeview-test"><div/></div>'),
+      el: $('<div id="treeview-test"><button class="edit">Edit</button><button class="apply">Apply</button>' +
+        '<textarea style="display: none;"></textarea><div/></div>'),
       children: [{
         label: 'Element #1',
         children: [{
@@ -24,20 +25,34 @@ define(['jquery', 'underscore', 'treeview'], function($, _, TreeView) {
     });
     treeview.render();
 
+    beforeEach(function() {
+      window.localStorage['treeview-test'] = '';
+    });
+
     it('works for init', function() {
-      delete window.localStorage['treeview-test'];
       expect(treeview.id).toEqual('treeview-test');
       expect(treeview.children.length).toEqual(3);
     });
 
     it('works for storage', function() {
       var html = treeview.$el.html();
-      delete window.localStorage['treeview-test'];
       treeview.edit();
       expect(window.localStorage['treeview-test']).not.toBeNull();
       window.localStorage['treeview-test'] += "\nElement";
       treeview.parse();
       expect(html).not.toEqual(treeview.$el.html());
+    });
+
+    it('works for buttons and input', function() {
+      var html = treeview.$el.html(),
+        textarea = treeview.$el.find('textarea');
+      expect(textarea.val().length).toEqual(0);
+      treeview.editTree();
+      expect(textarea.val().length).not.toEqual(0);
+      html = textarea.val();
+      textarea.val(textarea.val() + "\nElement");
+      treeview.saveTree();
+      expect(window.localStorage['treeview-test']).not.toEqual(html);
     });
 
     it('works for underscore', function() {
