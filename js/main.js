@@ -14,7 +14,6 @@ define([
       label: 'Element #2',
     }, {
       label: 'Element #3',
-      open: true,
       children: [{
         label: 'subchild #1',
         children: [{

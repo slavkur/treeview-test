@@ -14,7 +14,6 @@ define(['jquery', 'underscore', 'treeview'], function($, _, TreeView) {
         label: 'Element #2',
       }, {
         label: 'Element #3',
-        open: true,
         children: [{
           label: 'subchild #1',
           children: [{
@@ -43,16 +42,17 @@ define(['jquery', 'underscore', 'treeview'], function($, _, TreeView) {
       expect(html).not.toEqual(treeview.$el.html());
     });
 
-    it('works for buttons and input', function() {
+    it('works for buttons and input, open state', function() {
       var html = treeview.$el.html(),
         textarea = treeview.$el.find('textarea');
       expect(textarea.val().length).toEqual(0);
       treeview.editTree();
       expect(textarea.val().length).not.toEqual(0);
       html = textarea.val();
-      textarea.val(textarea.val() + "\nElement");
+      textarea.val(textarea.val() + "\n-TestElement\n    sub");
       treeview.saveTree();
       expect(window.localStorage['treeview-test']).not.toEqual(html);
+      expect(treeview.$el.find('div.nested.open label:contains(TestElement)').length).toEqual(1);
     });
 
     it('works for underscore', function() {
