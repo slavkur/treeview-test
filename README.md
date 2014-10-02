@@ -1,7 +1,7 @@
 treeview-test
 ============
-    npm install express ejs
-    node server.js
+    $ npm install express ejs
+    $ node server.js
     
 ## Run test cases
     $ npm install karma --save-dev
