@@ -4,7 +4,7 @@ define(['jquery', 'underscore', 'treeview'], function($, _, TreeView) {
 
     var treeview = new TreeView({
       el: $('<div id="treeview-test"><button class="edit">Edit</button><button class="apply">Apply</button>' +
-        '<textarea style="display: none;"></textarea><div/></div>'),
+        '<textarea style="display: none;"/><div/></div>'),
       children: [{
         label: 'Element #1',
         children: [{
@@ -30,7 +30,9 @@ define(['jquery', 'underscore', 'treeview'], function($, _, TreeView) {
 
     it('works for init', function() {
       expect(treeview.id).toEqual('treeview-test');
-      expect(treeview.children.length).toEqual(3);
+      expect(treeview.$el.find('> div').children().length).toEqual(3);
+      expect(treeview.$el.find('> div div.nested label:contains(Element #3)').length).toEqual(1);
+      expect(treeview.$el.find('> div div.nested:contains(Element #3) div.nested:contains(subchild #1)').length).toEqual(1);
     });
 
     it('works for storage', function() {
