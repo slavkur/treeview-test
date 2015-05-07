@@ -13,4 +13,4 @@ treeview-test
 	Run tests:
 	$ karma run
 
-The you can access your browser with url: http://localhost:8080
+Then you can access your browser with url: http://localhost:8080
